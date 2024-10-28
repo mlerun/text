@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.NoticeDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.NoticeDO">
+        <id column="id" jdbcType="NUMERIC" property="id"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="creatTime"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.shop.web.dataobject.NoticeDO" keyProperty="id" useGeneratedKeys="true">
+        insert into notice(content,createTime)
+        values (#{content},now())
+    </insert>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from notice
+        order by id desc
+
+    </select>
+
+    <select id="getNew" resultMap="BaseResultMap">
+        select * from notice
+        order by createTime desc
+        limit 1;
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select * from notice
+        where id=#{id}
+    </select>
+
+</mapper>

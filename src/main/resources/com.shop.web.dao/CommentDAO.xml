@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.CommentDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.CommentDO">
+        <id column="id" jdbcType="NUMERIC" property="id"/>
+        <result column="goodsId" jdbcType="NUMERIC" property="goodsId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="createdTime" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="userId" jdbcType="NUMERIC" property="userId"/>
+    </resultMap>
+    <insert id="add" parameterType="com.shop.web.dataobject.CommentDO" useGeneratedKeys="true" keyProperty="id">
+        insert into comment(goodsId,content,createdTime,userId)
+        values (#{goodsId},#{content},now(),#{userId})
+    </insert>
+    <delete id="delete">
+        delete from comment where id = #{id}
+    </delete>
+    <select id="findAll" resultMap="BaseResultMap">
+        select  * from comment
+    </select>
+    <select id="findByGoodsId" resultMap="BaseResultMap">
+        select * from comment where goodsId=#{goodsId}
+    </select>
+    <select id="findByCommentId" resultMap="BaseResultMap">
+        select * from comment where id = #{commentId}
+    </select>
+</mapper>

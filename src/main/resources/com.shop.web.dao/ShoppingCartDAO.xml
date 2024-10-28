@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.ShoppingCartDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.ShoppingCartDO">
+
+        <result column="userId" jdbcType="NUMERIC" property="userId"/>
+        <result column="goodsId" jdbcType="NUMERIC" property="goodsId"/>
+    </resultMap>
+
+
+    <insert id="add" parameterType="com.shop.web.dataobject.ShoppingCartDO">
+        insert into shopping_cart(userId,goodsId)
+        values(#{userId},#{goodsId})
+    </insert>
+
+    <delete id="delete" parameterType="com.shop.web.dataobject.ShoppingCartDO">
+        delete from shopping_cart where userId=#{userId} and goodsId=#{goodsId}
+    </delete>
+
+    <select id="getShoppingCart" resultMap="BaseResultMap">
+        select * from shopping_cart where userId=#{userId}
+    </select>
+</mapper>

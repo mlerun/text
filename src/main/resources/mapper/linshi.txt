@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.UserDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.UserDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="address" jdbcType="TEXT" property="address"/>
+    </resultMap>
+    <insert id="add" parameterType="com.shop.web.dataobject.UserDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (name, pwd, nick_name,gmt_created,gmt_modified)
+        VALUES(#{name}, #{pwd}, #{nickName}, now(),now())
+    </insert>
+    <update id="update" parameterType="com.shop.web.dataobject.UserDO">
+        update user
+        <set>
+            <if test="nickName != null">
+                nick_name=#{nickName}
+            </if>
+            <if test="mobile != null">
+                mobile=#{mobile}
+            </if>
+            <if test="address != null">
+                address=#{address}
+            </if>
+            <if test="pwd != null">
+                pwd=#{pwd}
+            </if>
+        </set>
+        gmt_modified=now()
+        where id=#{id}
+    </update>
+
+    <select id="findByUserName" resultMap="BaseResultMap">
+        select * from user where user_name = #{userName}
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select * from user where id = #{id}
+    </select>
+
+    <select  id="findAll" resultMap="BaseResultMap">
+        select * from user
+    </select>
+
+
+
+
+</mapper>

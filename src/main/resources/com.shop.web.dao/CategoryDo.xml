@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.CategoryDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.CategoryDO">
+        <id column="id" jdbcType="NUMERIC" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.shop.web.dataobject.CategoryDO" keyProperty="id" useGeneratedKeys="true">
+        insert into category(name,description)
+        values (#{name},#{description})
+    </insert>
+
+    <update id="update" parameterType="com.shop.web.dataobject.CategoryDO">
+        update category
+        <set>
+            <if test="description!=null">
+                description=#{description}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from category
+    </select>
+    <select id="findByCategoryId" resultMap="BaseResultMap">
+        select * from category
+        where id = #{categoryId}
+    </select>
+    <select id="findByCategoryName" resultMap="BaseResultMap">
+        select * from category
+        where name = #{categoryName}
+    </select>
+
+
+</mapper>

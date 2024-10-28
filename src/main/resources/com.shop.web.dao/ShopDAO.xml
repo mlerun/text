@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.ShopDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.ShopDO">
+        <id column="id" jdbcType="NUMERIC" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="owner" jdbcType="VARCHAR" property="owner"/>
+        <result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.shop.web.dataobject.ShopDO" keyProperty="id" useGeneratedKeys="true">
+        insert into shop (name,pwd,mobile,address,owner,idCard)
+        values (#{name},#{pwd},#{mobile},#{address},#{owner},#{idCard})
+    </insert>
+
+    <select id="findByShopName" resultMap="BaseResultMap">
+        select * from shop where name = #{shopName}
+    </select>
+    
+    <select id="findByShopId" resultMap="BaseResultMap">
+        select * from shop where id = #{shopId}
+    </select>
+    
+    <update id="update" parameterType="com.shop.web.dataobject.ShopDO">
+        update shop
+        <set>
+            <if test="pwd!=null">
+                pwd=#{pwd},
+            </if>
+            <if test="mobile!=null">
+                mobile=#{mobile}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findByGoodsId" parameterType="com.shop.web.dataobject.ShopDO">
+        select * from shop where (select shop_id * from goods where id = #{goodsId})
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from shop
+    </select>
+
+
+</mapper>

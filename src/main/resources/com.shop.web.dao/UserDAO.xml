@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.web.dao.UserDAO">
+    <resultMap id="BaseResultMap" type="com.shop.web.dataobject.UserDO">
+        <id column="id" jdbcType="NUMERIC" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="status" jdbcType="BOOLEAN" property="status"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.shop.web.dataobject.UserDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (name, pwd, nickName,status)
+        VALUES(#{name}, #{pwd}, #{nickName},#{status})
+    </insert>
+
+    <update id="update" parameterType="com.shop.web.dataobject.UserDO">
+        update user
+        <set>
+            <if test="nickName != null">
+                nickName=#{nickName},
+            </if>
+            <if test="mobile != null">
+                mobile=#{mobile},
+            </if>
+            <if test="address != null">
+                address=#{address},
+            </if>
+            <if test="pwd != null">
+                pwd=#{pwd},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+        </set>
+
+        where id=#{id}
+    </update>
+
+    <select id="findByUserName" resultMap="BaseResultMap">
+        select * from user where name = #{userName}
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select * from user where id = #{id}
+    </select>
+
+    <select  id="findAll" resultMap="BaseResultMap">
+        select * from user
+    </select>
+
+
+
+
+
+</mapper>
